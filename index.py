@@ -17,13 +17,6 @@ origins = [
     "http://localhost",
     "http://localhost:3000",
 ]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 MODEL = tf.keras.models.load_model("./models/2")
 CLASS_NAMES = ["Apple1stClass", "Apple2ndClass", "Apple3rdClass", "Pepper1stClass", "Pepper2ndClass",
                "Pepper3rdClass", "Tomato1stClass", "Tomato2ndClass", "Tomato3rdClass"]
