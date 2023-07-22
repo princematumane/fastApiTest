@@ -6,11 +6,8 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import uvicorn
 from PIL import Image
 from fastapi import FastAPI, File, UploadFile, Body
-from fastapi.middleware.cors import CORSMiddleware
-from langcorn import create_service
 
 app = FastAPI()
 origins = [
@@ -101,6 +98,7 @@ async def send_email(image: UploadFile = File(...), product: str = Body(...)):
 
 @app.get("/")
 async def main():
+      print("Hello world main")
       return {"message": "Running..."}
 
 @app.get("/display_counts")
@@ -135,7 +133,7 @@ async def display_class_counts():
             }
 
 
-pass
-if __name__ == "__main__":
-    print("Hello world main")
-    uvicorn.run(app, host='localhost', port=8000)
+# pass
+# if __name__ == "__main__":
+#     print("Hello world main")
+#     uvicorn.run(app, host='localhost', port=8000)
