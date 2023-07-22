@@ -6,14 +6,24 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+import uvicorn
 from PIL import Image
 from fastapi import FastAPI, File, UploadFile, Body
+from fastapi.middleware.cors import CORSMiddleware
+from langcorn import create_service
 
 app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
 ]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 MODEL = tf.keras.models.load_model("./models/2")
 CLASS_NAMES = ["Apple1stClass", "Apple2ndClass", "Apple3rdClass", "Pepper1stClass", "Pepper2ndClass",
                "Pepper3rdClass", "Tomato1stClass", "Tomato2ndClass", "Tomato3rdClass"]
@@ -98,7 +108,6 @@ async def send_email(image: UploadFile = File(...), product: str = Body(...)):
 
 @app.get("/")
 async def main():
-      print("Hello world main")
       return {"message": "Running..."}
 
 @app.get("/display_counts")
@@ -133,7 +142,6 @@ async def display_class_counts():
             }
 
 
-# pass
-# if __name__ == "__main__":
-#     print("Hello world main")
-#     uvicorn.run(app, host='localhost', port=8000)
+pass
+if __name__ == "__main__":
+    uvicorn.run(app, host='0.0.0.0', port=8000)
